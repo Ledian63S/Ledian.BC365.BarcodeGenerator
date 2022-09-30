@@ -49,4 +49,13 @@ table 60000 "Barcode Setup"
             Rec.Insert(true);
         end;
     end;
+
+    procedure URLExample(): Text
+    var
+        URL: Text;
+        EncodeBarcodeEAN13: Text[12];
+    begin
+        URL := 'https://barcode.tec-it.com/barcode.ashx?data=' + EncodeBarcodeEAN13 + '&code=' + 'EAN13' + '&dpi=96';
+        exit(URL);
+    end;
 }

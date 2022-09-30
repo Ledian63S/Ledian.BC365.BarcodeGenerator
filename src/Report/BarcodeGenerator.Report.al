@@ -1,16 +1,16 @@
-report 60000 "Print Label"
+report 60000 "Barcode Generator"
 {
     ApplicationArea = All;
-    Caption = 'Print Label';
+    Caption = 'Barcode Generator';
     DefaultLayout = RDLC;
     RDLCLayout = './src/Layouts/PrintLabel.rdl';
     UsageCategory = Tasks;
 
     dataset
     {
-        dataitem(Item; Item)
+        dataitem(Integer; Integer)
         {
-            RequestFilterFields = "No.";
+            MaxIteration = 1;
             column(Barcode; CompanyInfo.Picture) { }
 
             trigger OnAfterGetRecord()
@@ -22,15 +22,15 @@ report 60000 "Print Label"
 
     trigger OnInitReport()
     begin
-        BarcodeSetup.Get();
+        BarcodeSetup.GetRecordOnce();
     end;
 
     local procedure GenerateBarcode()
     begin
         EncodeBarcodeEAN13 := '805636410511';
         URL := BarcodeSetup."Barcode Url" + EncodeBarcodeEAN13 + '&code=' + BarcodeSetup."Barcode Type" + '&dpi=96';
-        if Client.Get(URL, Message) then begin
-            Content := Message.Content();
+        if Client.Get(URL, ResponseMessage) then begin
+            Content := ResponseMessage.Content();
             TempBlob.CreateInStream(InStr);
             CompanyInfo.Picture.CreateOutStream(OutStr);
             Content.ReadAs(Instr);
@@ -45,7 +45,7 @@ report 60000 "Print Label"
         EncodeBarcodeEAN13: Text[12];
         Client: HttpClient;
         Content: HttpContent;
-        Message: HttpResponseMessage;
+        ResponseMessage: HttpResponseMessage;
         InStr: Instream;
         OutStr: OutStream;
         URL: Text;

@@ -4,7 +4,7 @@
 	"publisher": "Ledian",
 	"version": "21.0.0.0",
 	"brief": "",
-	"description": "",
+	"description": "A Barcode Generator Using Webservice",
 	"privacyStatement": "",
 	"EULA": "",
 	"help": "",
@@ -18,7 +18,7 @@
 		{
 			"from": 60000,
 			"to": 60009
-		  }
+		}
 	],
 	"resourceExposurePolicy": {
 		"allowDebugging": true,
